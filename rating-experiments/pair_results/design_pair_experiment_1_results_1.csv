@@ -1,0 +1,7 @@
+user,image_a,image_b,filter_a,filter_b,intensity_a,intesity_b,selected_a,selected_b,resptime
+yes,Girl2_Lark_100.jpg,Girl2_Clarendon_50.jpg,Lark,Clarendon,100,50,0,1,0.510077
+yes,Girl2_Lark_75.jpg,Girl2_Juno_50.jpg,Lark,Juno,75,50,1,0,0.255438
+yes,Girl1_Juno_25.jpg,Girl1_Juno_75.jpg,Juno,Juno,25,75,0,1,0.138353
+yes,Girl2_Lark_50.jpg,Girl2_Clarendon_75.jpg,Lark,Clarendon,50,75,1,0,0.111314
+yes,Girl2_OG.jpg,Girl2_Lark_25.jpg,OG,Lark,0,25,0,1,0.098695
+yes,Girl2_Lark_50.jpg,Girl2_Clarendon_100.jpg,Lark,Clarendon,50,100,1,0,0.08368

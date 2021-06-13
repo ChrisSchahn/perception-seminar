@@ -66,13 +66,11 @@ def main():
 
     girl_one_pics = get_name_list("Girl1", filters, intensities, ".jpg")
     girl_two_pics = get_name_list("Girl2", filters, intensities, ".jpg")
-    person_pics = get_name_list("Girl3", filters, intensities, ".jpg")
 
     girl_one_design = get_design_for_picture(girl_one_pics)
     girl_two_design = get_design_for_picture(girl_two_pics)
-    person_design = get_design_for_picture(person_pics)
 
-    design = girl_one_design + girl_two_design + person_design
+    design = girl_one_design + girl_two_design
     design = shuffle_left_right_pic(design)
 
     npdesign = np.asarray(design)
