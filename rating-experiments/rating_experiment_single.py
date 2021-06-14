@@ -88,6 +88,7 @@ class Experiment(window.Window):
     def __init__(self, *args, **kwargs):
 
         #Let all of the arguments pass through
+        self.user = "yes"
         self.win = window.Window.__init__(self, *args, **kwargs)
         
         self.debug = False
@@ -121,7 +122,7 @@ class Experiment(window.Window):
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)  
-        header = ['test_image', 'response', 'resptime']
+        header = ['user', 'image_a', 'filter_a', 'intensity', 'response', 'resptime']
         self.resultswriter.writerow(header)
     
         
@@ -140,7 +141,7 @@ class Experiment(window.Window):
     def loaddesign(self):
         """ Loads the design file specifications"""
         self.design = read_design_csv(self.designfile)
-        self.totaltrials = len(self.design['test_image'])
+        self.totaltrials = len(self.design['image_a'])
         
         if self.debug:
             print(self.design)
@@ -238,7 +239,7 @@ class Experiment(window.Window):
         if self.debug:
             print('loading files')
             
-        self.test_image = pyglet.image.load(self.design['test_image'][self.currenttrial])
+        self.test_image = pyglet.image.load("single_images_tiny/" + self.design['image_a'][self.currenttrial])
         
         # changes anchor to the center of the image
         self.test_image.anchor_x = self.test_image.width // 2
@@ -249,7 +250,9 @@ class Experiment(window.Window):
     def savetrial(self, resp, resptime):
         """ Save the response of the current trial to the results file """
         
-        row = [self.design['test_image'][self.currenttrial],
+        row = [self.user, self.design['image_a'][self.currenttrial],
+               self.design['filter_a'][self.currenttrial],
+               self.design['intensity_a'][self.currenttrial],
                resp, resptime]
         self.resultswriter.writerow(row)
         print('Trial %d saved' % self.currenttrial)
@@ -320,7 +323,7 @@ if __name__ == "__main__":
         
     # it no argument passed, uses default design file    
     else:
-        designfile = 'design_rating_single.csv'
+        designfile = 'design_single_experiment_1.csv'
 
     
     # for fullscreen, use fullscreen=True and give your correct screen resolution in width= and height=
