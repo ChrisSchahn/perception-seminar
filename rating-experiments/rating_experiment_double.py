@@ -53,16 +53,11 @@ from pathlib import Path
 
 instructions = """
 Rating experiment - Double stimulus assessment\n
-Press one number to indicate the perceived degradation of image quality\n
-1 - Very annoying
-2 - Annoying
-3 - Slighly annoying
-4 - Perceptible but not annoying
-5 - Imperceptible\n
+Press right or left arrow key indicating which of the images looks "nicer" to you. \n
 Press ENTER to start
 Press ESC to exit """
 
-instructions_ontrial = """ 1 - Very annoying ... 5 - Imperceptible"""
+instructions_ontrial = """ Press Left for A : Press Right for B """
 
 ## stimulus presentation time variable
 # presentation_time = 1 # presentation time in seconds, None for unlimited presentation
@@ -116,13 +111,13 @@ class Experiment(window.Window):
                                                       width=int(self.width * 0.75), color=(0, 0, 0, 255),
                                                       anchor_x='center', anchor_y='center')
 
-        self.reference_text = pyglet.text.Label("reference",
+        self.reference_text = pyglet.text.Label("Image A",
                                                 font_name='Arial', multiline=False,
                                                 font_size=20, x=int(self.width / 2.0), y=int(self.height * 0.9),
                                                 width=int(self.width * 0.75), color=(0, 0, 0, 255),
                                                 anchor_x='center', anchor_y='center')
 
-        self.test_text = pyglet.text.Label("test",
+        self.test_text = pyglet.text.Label("Image B",
                                            font_name='Arial', multiline=False,
                                            font_size=20, x=int(self.width / 2.0), y=int(self.height * 0.9),
                                            width=int(self.width * 0.75), color=(0, 0, 0, 255),
@@ -152,7 +147,8 @@ class Experiment(window.Window):
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)
-        header = ['user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intesity_b', 'selected_a', 'selected_b', 'resptime']
+        header = ['user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intensity_b',
+                  'selected_filter', 'selected_intensity', 'resptime']
         self.resultswriter.writerow(header)
 
         # experiment control 
@@ -287,16 +283,25 @@ class Experiment(window.Window):
         selection_a = 1 - resp
         selection_b = resp
 
-        # 'user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intesity_b', 'selected_a', 'selected_b', 'resptime'
+        if selection_a:
+            selected_filter = self.design['filter_a'][self.currenttrial]
+            selected_intensity = self.design['intensity_a'][self.currenttrial]
+        else:
+            selected_filter = self.design['filter_b'][self.currenttrial]
+            selected_intensity = self.design['intensity_b'][self.currenttrial]
+
+
+        # 'user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intensity_b',
+        #                   'selected_filter', 'selected_intensity', 'resptime'
         row = [self.user,
                self.design['image_a'][self.currenttrial],
                self.design['image_b'][self.currenttrial],
                self.design['filter_a'][self.currenttrial],
                self.design['filter_b'][self.currenttrial],
                self.design['intensity_a'][self.currenttrial],
-               self.design['intesity_b'][self.currenttrial],
-               selection_a,
-               selection_b,
+               self.design['intensity_b'][self.currenttrial],
+               selected_filter,
+               selected_intensity,
                resptime]
         self.resultswriter.writerow(row)
         print('Trial %d saved' % self.currenttrial)
