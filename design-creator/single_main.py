@@ -66,18 +66,18 @@ def main():
     girl_one_pics = get_name_list("Girl1", filters, intensities, ".jpg")
     girl_two_pics = get_name_list("Girl2", filters, intensities, ".jpg")
     lake_pics = get_name_list("Lake", filters, intensities, ".jpg")
-    mountains_pics = get_name_list("Mountains", filters, intensities, ".jpg")
+    #mountains_pics = get_name_list("Mountains", filters, intensities, ".jpg")
     ocean_pics = get_name_list("Ocean", filters, intensities, ".jpg")
     temple_pics = get_name_list("Temple", filters, intensities, ".jpg")
 
     girl_one_design = get_design_for_picture(girl_one_pics)
     girl_two_design = get_design_for_picture(girl_two_pics)
     lake_design = get_design_for_picture(lake_pics)
-    mountains_design = get_design_for_picture(mountains_pics)
+    #mountains_design = get_design_for_picture(mountains_pics)
     ocean_design = get_design_for_picture(ocean_pics)
     temple_design = get_design_for_picture(temple_pics)
 
-    design = girl_one_design + girl_two_design + lake_design + mountains_design + ocean_design + temple_design
+    design = girl_one_design + girl_two_design + lake_design + ocean_design + temple_design
     #design = shuffle_left_right_pic(design)
 
     npdesign = np.asarray(design)
