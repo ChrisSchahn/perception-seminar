@@ -46,8 +46,8 @@ for i in ints:
 
 labels = ["0", "25", "50", "75", "100"]
 print(filter_results["OG"])
-x = np.arange(len(labels))  # the label locations
-width = 0.15  # the width of the bars
+x = np.arange(len(labels))
+width = 0.15
 
 fig, ax = plt.subplots()
 rects1 = ax.bar(x - 2*width, filter_results["OG"], width, label='Original')
@@ -57,10 +57,10 @@ rects3 = ax.bar(x + width, filter_results["Lark"], width, label='Lark')
 rects4 = ax.bar(x + 2*width, filter_results["Juno"], width, label='Juno')
 
 
-
-# Add some text for labels, title and custom x-axis tick labels, etc.
 ax.set_xticks(x)
 ax.set_xticklabels(labels)
+plt.title("Pair Experiment")
+plt.xlabel("Filter Intensities")
 ax.legend()
 
 # ax.bar_label(rects1, padding=3)

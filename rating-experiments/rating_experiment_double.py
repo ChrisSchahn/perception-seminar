@@ -52,13 +52,15 @@ from pathlib import Path
 
 
 instructions = """
-Rating experiment - Double stimulus assessment\n
-Wählen Sie in jedem Durchlauf das Bild, das Sie als optisch ansprechender empfinden. Nutzen Sie hierfür die 
-beiden Pfeiltasten rechts/links. \n
-Drücken Sie ENTER zum starten.
-Drücken Sie ESC zum beenden. """
+Wilkommen!\n
+Im folgenden Experiment werden immer zwei Bilder nebeneinander angezeigt.
+Wähle in jedem Durchlauf das Bild, das Du als optisch ansprechender empfindest. Nutze hierfür die rechte und linke Pfeiltaste. \n
+Bevor du beginnst, gib bitte an, ob du Instagram verwendest.
+Drücke die Taste 'y' wenn du Instagram verwendest. Drücke 'n' wenn du kein Instagram verwendest. \n
+Drücke ENTER um zu bestätigen und zu starten.
+Drücke Sie ESC um zu beenden. """
 
-instructions_ontrial = """ Bild A - linke Pfeiltaste : Bild B - rechte Pfeiltaste """
+instructions_ontrial = """ Linke Pfeiltaste     :     Rechte Pfeiltaste """
 
 ## stimulus presentation time variable
 # presentation_time = 1 # presentation time in seconds, None for unlimited presentation
@@ -90,7 +92,7 @@ class Experiment(window.Window):
     def __init__(self, *args, **kwargs):
 
         # TODO: ask when starting
-        self.user = "yes"
+        self.usage = ""
 
         # Let all of the arguments pass through
         self.win = window.Window.__init__(self, *args, **kwargs)
@@ -131,16 +133,14 @@ class Experiment(window.Window):
         # Results file - assigning filename
         s = designfile.split('.')
         s[-1] = '_results_1.csv'
-        self.resultsfile = 'pair_results/' + ''.join(s)
+        self.resultsfile = 'pair_results/' + 'pair_result_1.csv'
 
         file = Path(self.resultsfile)
         index = 2
 
         # prevents result from being replaced by new results
         while file.is_file():
-            s = designfile.split('.')
-            s[-1] = '_results_' + str(index) + '.csv'
-            self.resultsfile = 'pair_results/' + ''.join(s)
+            self.resultsfile = 'pair_results/pair_result_' + str(index) + '.csv'
             file = Path(self.resultsfile)
             index += 1
 
@@ -148,8 +148,8 @@ class Experiment(window.Window):
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)
-        header = ['user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intensity_b',
-                  'selected_filter', 'selected_intensity', 'resptime']
+        header = ['usage', 'image_a', 'image_b', 'filter_a', 'filter_b', 'coresp_filter_a', 'coresp_filter_b', 'intensity_a', 'intensity_b',
+                  'selected_filter', 'coresp_selected_filter', 'selected_intensity', 'left_right', 'resptime']
         self.resultswriter.writerow(header)
 
         # experiment control 
@@ -281,28 +281,41 @@ class Experiment(window.Window):
     def savetrial(self, resp, resptime):
         """ Save the response of the current trial to the results file """
 
-        selection_a = 1 - resp
-        selection_b = resp
+        left_right = 'left' if resp == 0 else 'right'
 
-        if selection_a:
+        coresp_filter_a = self.design['filter_a'][self.currenttrial]
+        coresp_filter_b = self.design['filter_b'][self.currenttrial]
+
+        if coresp_filter_a == 'OG':
+            coresp_filter_a = coresp_filter_b
+
+        if coresp_filter_b == 'OG':
+            coresp_filter_b = coresp_filter_a
+
+        if left_right == 'left':
             selected_filter = self.design['filter_a'][self.currenttrial]
             selected_intensity = self.design['intensity_a'][self.currenttrial]
+            coresp_selected_filter = coresp_filter_a
         else:
             selected_filter = self.design['filter_b'][self.currenttrial]
             selected_intensity = self.design['intensity_b'][self.currenttrial]
+            coresp_selected_filter = coresp_filter_b
 
-
-        # 'user', 'image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intensity_b',
-        #                   'selected_filter', 'selected_intensity', 'resptime'
-        row = [self.user,
+# 'usage', 'image_a', 'image_b', 'filter_a', 'filter_b', 'coresp_filter_a', 'coresp_filter_b', 'intensity_a', 'intensity_b',
+        #                   'selected_filter', 'coresp_selected_filter', 'selected_intensity', 'left_right', 'resptime'
+        row = [self.usage,
                self.design['image_a'][self.currenttrial],
                self.design['image_b'][self.currenttrial],
                self.design['filter_a'][self.currenttrial],
                self.design['filter_b'][self.currenttrial],
+               coresp_filter_a,
+               coresp_filter_b,
                self.design['intensity_a'][self.currenttrial],
                self.design['intensity_b'][self.currenttrial],
                selected_filter,
+               coresp_selected_filter,
                selected_intensity,
+               left_right,
                resptime]
         self.resultswriter.writerow(row)
         print('Trial %d saved' % self.currenttrial)
@@ -320,6 +333,11 @@ class Experiment(window.Window):
         if symbol == key.ESCAPE:
             self.dispatch_event('on_close')
 
+        if symbol == key.Y:
+            self.usage = 'yes'
+
+        if symbol == key.N:
+            self.usage = 'no'
 
         elif (symbol == key.NUM_1 or symbol == key.LEFT) and self.experimentphase == 1:
             print("Press: Left arrow")

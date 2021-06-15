@@ -65,7 +65,7 @@ def main():
     intensities = ["25", "50", "75", "100"]
 
     girl_one_pics = get_name_list("Girl1", filters, intensities, ".jpg")
-    girl_two_pics = get_name_list("Ocean", filters, intensities, ".jpg")
+    girl_two_pics = get_name_list("Girl2", filters, intensities, ".jpg")
 
     girl_one_design = get_design_for_picture(girl_one_pics)
     girl_two_design = get_design_for_picture(girl_two_pics)
