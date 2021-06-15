@@ -53,11 +53,12 @@ from pathlib import Path
 
 instructions = """
 Rating experiment - Double stimulus assessment\n
-Press right or left arrow key indicating which of the images looks "nicer" to you. \n
-Press ENTER to start
-Press ESC to exit """
+Wählen Sie in jedem Durchlauf das Bild, das Sie als optisch ansprechender empfinden. Nutzen Sie hierfür die 
+beiden Pfeiltasten rechts/links. \n
+Drücken Sie ENTER zum starten.
+Drücken Sie ESC zum beenden. """
 
-instructions_ontrial = """ Press Left for A : Press Right for B """
+instructions_ontrial = """ Bild A - linke Pfeiltaste : Bild B - rechte Pfeiltaste """
 
 ## stimulus presentation time variable
 # presentation_time = 1 # presentation time in seconds, None for unlimited presentation
