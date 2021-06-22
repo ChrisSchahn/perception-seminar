@@ -51,7 +51,7 @@ def write_to_csv(design):
         file = Path(filename)
         index += 1
 
-    fields = ['image_a', 'image_b', 'filter_a', 'filter_b', 'intensity_a', 'intensity_b']
+    fields = ['image_a', 'image_b', 'f_a_og', 'f_b_og', 'i_a', 'i_b']
 
     with open(filename, 'w') as csvfile:
         csvwriter = csv.writer(csvfile)

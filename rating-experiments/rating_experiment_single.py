@@ -30,7 +30,8 @@ import sys
 import pyglet
 from pyglet import window
 from pyglet import clock
-from pyglet.window import key 
+from pyglet.window import key
+from pathlib import Path
 
 
 
@@ -47,13 +48,13 @@ instructions = """
 Welcome!\n
 Rating experiment - Single stimulus assessment\n
 Sie werden im folgenden Experiment immer genau ein Bild sehen.
-Sie wählen für jedes Bild eine Zahl zwischen 1-5, welche widerspiegelt wie sicher sie sich sind, dass das Bild mit einem Filter bearbeitet wurde.\n
-Wobei 1 für, sie sind 0% sicher, steht und 5 sie sind sich zu 100% sicher!\n
-Drücke bevor du beginnst 'y' wenn du Instagram verwendest.\n Und 'n' wenn nicht.\n
-Drücke Enter zum bestätigen und starten.
-Drücke ESC um das Experiment zu beenden."""
+Sie wählen für jedes Bild eine Zahl zwischen 1-5, welche widerspiegelt, für wie stark bearbeitet Sie das Bild empfinden.\n
+Wobei 1 für, garnicht bearbeitet steht und 5 für sehr stark!\n
+Drücken Sie bevor Sie beginnen 'y', wenn Sie Instagram verwenden.\n Und 'n' wenn nicht.\n
+Drücken Sie Enter zum bestätigen und starten.
+Drücken Sie ESC um das Experiment zu beenden."""
 
-instructions_ontrial = """ 1 -  ... 5 """
+instructions_ontrial = """ 1: unedited - ... - 5: heavily edited """
 
 
 ## stimulus presentation time variable
@@ -117,11 +118,27 @@ class Experiment(window.Window):
         s = designfile.split('.')
         s[-1] = '_results.csv'
         self.resultsfile = ''.join(s)
+
+
+
+        # Results file - assigning filename
+        self.resultsfile = 'single_results/single_result_1.csv'
+
+        file = Path(self.resultsfile)
+        index = 2
+
+        # prevents result from being replaced by new results
+        while file.is_file():
+            self.resultsfile = 'single_results/single_result_' + str(index) + '.csv'
+            file = Path(self.resultsfile)
+            index += 1
+
+
         
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)  
-        header = ['usage', 'image_a', 'filter_a', 'intensity', 'response', 'resptime']
+        header = ['usage', 'image', 'filter', 'intensity', 'response', 'resptime']
         self.resultswriter.writerow(header)
     
         
@@ -140,7 +157,7 @@ class Experiment(window.Window):
     def loaddesign(self):
         """ Loads the design file specifications"""
         self.design = read_design_csv(self.designfile)
-        self.totaltrials = len(self.design['image_a'])
+        self.totaltrials = len(self.design['image'])
         
         if self.debug:
             print(self.design)
@@ -238,7 +255,7 @@ class Experiment(window.Window):
         if self.debug:
             print('loading files')
             
-        self.test_image = pyglet.image.load("single_images_tiny/" + self.design['image_a'][self.currenttrial])
+        self.test_image = pyglet.image.load("single_images_tiny/" + self.design['image'][self.currenttrial])
         
         # changes anchor to the center of the image
         self.test_image.anchor_x = self.test_image.width // 2
@@ -249,9 +266,9 @@ class Experiment(window.Window):
     def savetrial(self, resp, resptime):
         """ Save the response of the current trial to the results file """
         
-        row = [self.usage, self.design['image_a'][self.currenttrial],
-               self.design['filter_a'][self.currenttrial],
-               self.design['intensity_a'][self.currenttrial],
+        row = [self.usage, self.design['image'][self.currenttrial],
+               self.design['filter'][self.currenttrial],
+               self.design['intensity'][self.currenttrial],
                resp, resptime]
         self.resultswriter.writerow(row)
         print('Trial %d saved' % self.currenttrial)

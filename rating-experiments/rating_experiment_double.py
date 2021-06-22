@@ -56,9 +56,9 @@ Wilkommen!\n
 Im folgenden Experiment werden immer zwei Bilder nebeneinander angezeigt.
 Wähle in jedem Durchlauf das Bild, das Du als optisch ansprechender empfindest. Nutze hierfür die rechte und linke Pfeiltaste. \n
 Bevor du beginnst, gib bitte an, ob du Instagram verwendest.
-Drücke die Taste 'y' wenn du Instagram verwendest. Drücke 'n' wenn du kein Instagram verwendest. \n
-Drücke ENTER um zu bestätigen und zu starten.
-Drücke Sie ESC um zu beenden. """
+Drücken Sie die Taste 'y' wenn du Instagram verwendest. Drücke 'n' wenn du kein Instagram verwendest. \n
+Drücken Sie ENTER um zu bestätigen und zu starten.
+Drücken Sie ESC um zu beenden. """
 
 instructions_ontrial = """ Linke Pfeiltaste     :     Rechte Pfeiltaste """
 
@@ -131,9 +131,7 @@ class Experiment(window.Window):
         self.designfile = designfile
 
         # Results file - assigning filename
-        s = designfile.split('.')
-        s[-1] = '_results_1.csv'
-        self.resultsfile = 'pair_results/' + 'pair_result_daniel.csv'
+        self.resultsfile = 'pair_results/pair_result_1.csv'
 
         file = Path(self.resultsfile)
         index = 2
@@ -148,8 +146,8 @@ class Experiment(window.Window):
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)
-        header = ['usage', 'image_a', 'image_b', 'filter_a', 'filter_b', 'coresp_filter_a', 'coresp_filter_b', 'intensity_a', 'intensity_b',
-                  'selected_filter', 'coresp_selected_filter', 'selected_intensity', 'left_right', 'resptime']
+        header = ['usage', 'image_a', 'image_b', 'f_a_og', 'f_b_og', 'f_a', 'f_b', 'i_a', 'i_b',
+                  'chosen_f_og', 'chosen_f', 'chosen_i', 'left_right', 'resptime']
         self.resultswriter.writerow(header)
 
         # experiment control 
@@ -282,9 +280,9 @@ class Experiment(window.Window):
         """ Save the response of the current trial to the results file """
 
         left_right = 'left' if resp == 0 else 'right'
-
-        coresp_filter_a = self.design['filter_a'][self.currenttrial]
-        coresp_filter_b = self.design['filter_b'][self.currenttrial]
+# 'usage', 'image_a', 'image_b', 'f_a_og', 'f_b_og', 'f_a', 'f_b', 'i_a', 'i_b', 'chosen_f_og', 'chosen_f', 'chosen_i', 'left_right', 'resptime'
+        coresp_filter_a = self.design['f_a_og'][self.currenttrial]
+        coresp_filter_b = self.design['f_b_og'][self.currenttrial]
 
         if coresp_filter_a == 'OG':
             coresp_filter_a = coresp_filter_b
@@ -293,25 +291,24 @@ class Experiment(window.Window):
             coresp_filter_b = coresp_filter_a
 
         if left_right == 'left':
-            selected_filter = self.design['filter_a'][self.currenttrial]
-            selected_intensity = self.design['intensity_a'][self.currenttrial]
+            selected_filter = self.design['f_a_og'][self.currenttrial]
+            selected_intensity = self.design['i_a'][self.currenttrial]
             coresp_selected_filter = coresp_filter_a
         else:
-            selected_filter = self.design['filter_b'][self.currenttrial]
-            selected_intensity = self.design['intensity_b'][self.currenttrial]
+            selected_filter = self.design['f_b_og'][self.currenttrial]
+            selected_intensity = self.design['i_b'][self.currenttrial]
             coresp_selected_filter = coresp_filter_b
 
-# 'usage', 'image_a', 'image_b', 'filter_a', 'filter_b', 'coresp_filter_a', 'coresp_filter_b', 'intensity_a', 'intensity_b',
-        #                   'selected_filter', 'coresp_selected_filter', 'selected_intensity', 'left_right', 'resptime'
+
         row = [self.usage,
                self.design['image_a'][self.currenttrial],
                self.design['image_b'][self.currenttrial],
-               self.design['filter_a'][self.currenttrial],
-               self.design['filter_b'][self.currenttrial],
+               self.design['f_a_og'][self.currenttrial],
+               self.design['f_b_og'][self.currenttrial],
                coresp_filter_a,
                coresp_filter_b,
-               self.design['intensity_a'][self.currenttrial],
-               self.design['intensity_b'][self.currenttrial],
+               self.design['i_a'][self.currenttrial],
+               self.design['i_b'][self.currenttrial],
                selected_filter,
                coresp_selected_filter,
                selected_intensity,
