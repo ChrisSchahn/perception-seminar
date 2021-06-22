@@ -44,17 +44,16 @@ from pyglet.window import key
 
 
 instructions = """
+Welcome!\n
 Rating experiment - Single stimulus assessment\n
-Press one number to indicate the perceived image quality\n
-1 - Bad
-2 - Poor
-3 - Fair
-4 - Good
-5 - Excellent\n
-Press ENTER to start
-Press ESC to exit """
+Sie werden im folgenden Experiment immer genau ein Bild sehen.
+Sie wählen für jedes Bild eine Zahl zwischen 1-5, welche widerspiegelt wie sicher sie sich sind, dass das Bild mit einem Filter bearbeitet wurde.\n
+Wobei 1 für, sie sind 0% sicher, steht und 5 sie sind sich zu 100% sicher!\n
+Drücke bevor du beginnst 'y' wenn du Instagram verwendest.\n Und 'n' wenn nicht.\n
+Drücke Enter zum bestätigen und starten.
+Drücke ESC um das Experiment zu beenden."""
 
-instructions_ontrial = """ 1 - Bad ... 5 - Excellent """
+instructions_ontrial = """ 1 -  ... 5 """
 
 
 ## stimulus presentation time variable
@@ -88,7 +87,7 @@ class Experiment(window.Window):
     def __init__(self, *args, **kwargs):
 
         #Let all of the arguments pass through
-        self.user = "yes"
+        self.usage = ""
         self.win = window.Window.__init__(self, *args, **kwargs)
         
         self.debug = False
@@ -122,7 +121,7 @@ class Experiment(window.Window):
         # opening the results file, writing the header
         self.rf = open(self.resultsfile, 'w')
         self.resultswriter = csv.writer(self.rf)  
-        header = ['user', 'image_a', 'filter_a', 'intensity', 'response', 'resptime']
+        header = ['usage', 'image_a', 'filter_a', 'intensity', 'response', 'resptime']
         self.resultswriter.writerow(header)
     
         
@@ -250,7 +249,7 @@ class Experiment(window.Window):
     def savetrial(self, resp, resptime):
         """ Save the response of the current trial to the results file """
         
-        row = [self.user, self.design['image_a'][self.currenttrial],
+        row = [self.usage, self.design['image_a'][self.currenttrial],
                self.design['filter_a'][self.currenttrial],
                self.design['intensity_a'][self.currenttrial],
                resp, resptime]
@@ -270,6 +269,12 @@ class Experiment(window.Window):
         
         if symbol == key.ESCAPE:
             self.dispatch_event('on_close')  
+
+        if symbol == key.Y:
+            self.usage = 'yes'
+
+        if symbol == key.N:
+            self.usage = 'no'
 
         elif (symbol == key.NUM_1 or symbol == key._1) and self.experimentphase==1:
             print("Press: 1")
@@ -320,7 +325,7 @@ if __name__ == "__main__":
     
     if len(sys.argv) > 1:
         designfile = sys.argv[1]
-        
+
     # it no argument passed, uses default design file    
     else:
         designfile = 'design_single_experiment_1.csv'

@@ -133,7 +133,7 @@ class Experiment(window.Window):
         # Results file - assigning filename
         s = designfile.split('.')
         s[-1] = '_results_1.csv'
-        self.resultsfile = 'pair_results/' + 'pair_result_1.csv'
+        self.resultsfile = 'pair_results/' + 'pair_result_daniel.csv'
 
         file = Path(self.resultsfile)
         index = 2
