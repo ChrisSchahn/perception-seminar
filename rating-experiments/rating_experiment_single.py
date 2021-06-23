@@ -345,7 +345,7 @@ if __name__ == "__main__":
 
     # it no argument passed, uses default design file    
     else:
-        designfile = 'design_single_experiment_1.csv'
+        designfile = 'design_single_experiment_2.csv'
 
     
     # for fullscreen, use fullscreen=True and give your correct screen resolution in width= and height=

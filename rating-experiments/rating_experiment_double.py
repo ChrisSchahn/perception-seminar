@@ -368,7 +368,7 @@ if __name__ == "__main__":
 
     # it no argument passed, uses default design file    
     else:
-        designfile = 'design_pair_experiment_1.csv'
+        designfile = 'design_pair_experiment_2.csv'
 
     # for fullscreen, use fullscreen=True and give your correct screen resolution in width= and height=
     win = Experiment(caption="Rating experiment - double stimulus assessment",
