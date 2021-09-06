@@ -65,7 +65,7 @@ Image("pair.png", height=600, width=600)
 
 #### Geschätzte Filterstärke
 
-In diesem Experiment wurden den Versuchspersonen alle Variationen der vier Motive jeweils einzeln gezeigt. Für jedes Bild sollte dann die geschätzte Intensität der Bearbeitung angegeben werden. Es konnte bei jedem Bild zwischen 1, 2, 3, 4, 5 ausgewählt werden, wobei 1 - 0%, 2 - 25%, 3 - 50%, 4 - 75%, 5 - 100% Filterintensität entsprochen hat. Insgesamt gab es pro Versuchsdurchlauf 60 Einstufungen. Vier verschiedene Motive multipliziert mit drei verschiedenen Filtern multipliziert mit den jeweils fünf verschiedenen Intensitätsstufen (die Intensität von 0% gab es bei allen Filtertypen). Ergibt $4 \cdot 3 \cdot 5  = 60$ Vergleiche. Auch das hier verwendete Design Python Skript liegt unter /design-creator/single_main.py zusammen mit dem .csv Design File.
+In diesem Experiment wurden den Versuchspersonen alle Variationen der vier Motive jeweils einzeln gezeigt. Für jedes Bild sollte dann die geschätzte Intensität der Bearbeitung angegeben werden. Es konnte bei jedem Bild zwischen 1, 2, 3, 4, 5 ausgewählt werden, wobei 1 - 0%, 2 - 25%, 3 - 50%, 4 - 75%, 5 - 100% Filterintensität entsprochen hat. Insgesamt gab es pro Versuchsdurchlauf 60 Einstufungen. Vier verschiedene Motive multipliziert mit drei verschiedenen Filtern multipliziert mit den jeweils fünf verschiedenen Intensitätsstufen (die Intensität von 0% gab es bei allen Filtertypen). Ergibt [!equation](https://latex.codecogs.com/gif.latex?4%20%5Ccdot%203%20%5Ccdot%205%20%3D%2060) Vergleiche. Auch das hier verwendete Design Python Skript liegt unter /design-creator/single_main.py zusammen mit dem .csv Design File.
 
 ### Ablauf der Experimente
 
@@ -592,13 +592,13 @@ Offensichtlich würde eine höhere Anzahl an Teilnehmern und Stimuli das Ergebni
 
 ### Ausblick
 
-Insgesamt wurde festgestellt, dass Social Media Konsum ein nicht zu vernachlässigender Faktor in der Wahrnehmung von Bildern darstellt. Bei ca. 4,2 Milliarden aktiven Social Media Nutzern im Jahre 2021 $^1$ sollte dies in Studien zu Wahrnehmung und Bildqualität unbedingt berücksichtigt werden.
+Insgesamt wurde festgestellt, dass Social Media Konsum ein nicht zu vernachlässigender Faktor in der Wahrnehmung von Bildern darstellt. Bei ca. 4,2 Milliarden aktiven Social Media Nutzern im Jahre 2021 [!equation](https://latex.codecogs.com/gif.latex?%5E1) sollte dies in Studien zu Wahrnehmung und Bildqualität unbedingt berücksichtigt werden.
 
 ### Referenzen
 
-$^1$: https://de.statista.com/statistik/daten/studie/739881/umfrage/monatlich-aktive-social-media-nutzer-weltweit/
+[!equation](https://latex.codecogs.com/gif.latex?%5E1): https://de.statista.com/statistik/daten/studie/739881/umfrage/monatlich-aktive-social-media-nutzer-weltweit/
 
-$^2$: https://www.signatureedits.com/free-raw-photos/
+[!equation](https://latex.codecogs.com/gif.latex?%5E2): https://www.signatureedits.com/free-raw-photos/
 
 
 ```python
